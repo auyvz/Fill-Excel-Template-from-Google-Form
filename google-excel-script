@@ -1,0 +1,43 @@
+function myFunction() {
+  
+  //row uses answer from the second row (change this places the row that you want to use)
+  var row = 2;   
+  
+  // getFileById(' use your excel template/table file's id)
+  var destinationDocumentId = DriveApp.getFileById(' ID OF YOUR EXCEL TEMPLATE/TABLE ').makeCopy().getId();
+  
+  //open the source and destination files
+  var sourceSheet = SpreadsheetApp.getActiveSpreadsheet();
+  var destinationSheet = SpreadsheetApp.openById(destinationDocumentId);
+  
+  //select first sheet from source and destination files
+  var sourceSheet = sourceSheet.getSheets()[0];
+  var destinationSheet = destinationSheet.getSheets()[0];
+  
+  //change only "YOUR NUMBER" within how many cells will you use in your row. (the number from the first colum to the last column in the row that you'll use)
+  var sourceData = sourceSheet.getSheetValues(row, row, 1, YOUR NUMBER);
+
+  //TESTING CODES
+  //var destinationData = destinationSheet.getSheetValues(6, 2, 16, 1);
+  //var destinationData = destinationSheet.getRange(6, 2, 16, 1);
+  //var destinationData = destinationSheet.getRangeList(['B6:B21', 'C6:C21'])
+  
+  //Rename the copied file
+  // YOU CAN CHANGE THE NAME OF YOUR COPIED EXCEL USING ONE OF THE ANSWERS
+  SpreadsheetApp.openById(destinationDocumentId).setName( sourceData[0][0] + ' ' + sourceData[0][1] );
+  
+  //TESTING
+  //YOU CAN CHANGE ONE SPECIAL CELL
+  //var firstData = destinationSheet.getRange("A3");
+  //firstData.setValue(sourceData[0][0] + ' date');
+  
+  // MODIFY THE FOR FUNCTION FOR YOUR SOLUTION
+  //copy datas from source to destination by twos
+  for (var i = 0, j=0; j < 16; i+=2, j++) {
+
+    destinationSheet.getRange(6+j, 2, 1, 1).setValue(sourceData[0][i+2]);
+    destinationSheet.getRange(6+j, 3, 1, 1).setValue(sourceData[0][i+3]);
+    
+  }
+  
+}
